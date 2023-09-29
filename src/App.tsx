@@ -1,7 +1,7 @@
 function App() {
   return (
     <>
-      <p className="text-lg">Click on the Vite and React logos to learn more</p>
+      <p className="text-lg">Hi! I am Rasil Baidar.</p>
     </>
   );
 }
