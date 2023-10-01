@@ -1,6 +1,6 @@
 import { createHashRouter } from "react-router-dom";
 import { AboutPage, LandingPage, ContactPage } from "../pages";
-import Layout from "../layout";
+import Layout from "../layout/main";
 
 const router = createHashRouter([
   {
