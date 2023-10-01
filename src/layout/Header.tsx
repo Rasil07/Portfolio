@@ -1,5 +1,48 @@
+import clsx from "clsx";
+import { Link } from "react-router-dom";
+
 // import { useNavigate } from "react-router-dom";
 
+function Avatar({
+  large = false,
+  className,
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof Link>, "href"> & {
+  large?: boolean;
+}) {
+  return (
+    <Link
+      aria-label="Home"
+      className={clsx(className, "pointer-events-auto")}
+      {...props}
+    >
+      <img
+        src="/img/pp.jpeg"
+        alt=""
+        sizes={large ? "4rem" : "2.25rem"}
+        className={clsx(
+          "rounded-full bg-zinc-100 object-cover dark:bg-zinc-800",
+          large ? "h-16 w-16" : "h-9 w-9"
+        )}
+      />
+    </Link>
+  );
+}
+
+function AvatarContainer({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  return (
+    <div
+      className={clsx(
+        className,
+        "h-10 w-10 rounded-full bg-white/90 p-0.5 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:ring-white/10"
+      )}
+      {...props}
+    />
+  );
+}
 const Header = () => {
   //   const navigate = useNavigate();
 
@@ -7,23 +50,10 @@ const Header = () => {
     <div className="px-10 py-5 ">
       <header className="flex space-x-6">
         <p>Rasil</p>
-        <ul className="flex space-x-6">
-          <li>
-            <a href="/">Work Experience</a>
-          </li>
-          <li>
-            <a href="#/about">Articles</a>
-          </li>
-          <li>
-            <a href="#/about">Skills</a>
-          </li>
-          <li>
-            <a href="#/about">About</a>
-          </li>
-          <li>
-            <a href="#/contact">Contact</a>
-          </li>
-        </ul>
+
+        <AvatarContainer>
+          <Avatar to={"/"} />
+        </AvatarContainer>
       </header>
     </div>
   );

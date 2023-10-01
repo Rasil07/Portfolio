@@ -1,5 +1,5 @@
 import React from "react";
-// import Header from "./Header";
+import Header from "../Header";
 
 type LayoutProps = {
   render: () => React.JSX.Element;
@@ -13,6 +13,7 @@ const Layout = ({ render }: LayoutProps) => {
         </div>
       </div>
       <div className="relative flex w-full flex-col">
+        <Header />
         <main className="flex-auto">{render()}</main>
       </div>
     </>
