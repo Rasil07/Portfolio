@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-
-// import { useNavigate } from "react-router-dom";
+import { Container } from "../common/ui";
 
 function Avatar({
   large = false,
@@ -44,18 +43,24 @@ function AvatarContainer({
   );
 }
 const Header = () => {
-  //   const navigate = useNavigate();
-
   return (
-    <div className="px-10 py-5 ">
-      <header className="flex space-x-6">
-        <p>Rasil</p>
+    <>
+      <header
+        className="pointer-events-none relative z-50 flex flex-none flex-col"
+        style={{
+          height: "var(--header-height)",
+          marginBottom: "var(--header-mb)",
+        }}
+      >
+        <Container.Container>
+          <p>Rasil</p>
 
-        <AvatarContainer>
-          <Avatar to={"/"} />
-        </AvatarContainer>
+          <AvatarContainer>
+            <Avatar to={"/"} />
+          </AvatarContainer>
+        </Container.Container>
       </header>
-    </div>
+    </>
   );
 };
 
