@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 import clsx from "clsx";
-import { Link, useLocation, useNavigation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container } from "../common/ui";
 import { useEffect, useRef } from "react";
 
@@ -51,10 +51,8 @@ function clamp(number: number, a: number, b: number) {
   return Math.min(Math.max(number, min), max);
 }
 const Header = () => {
-  const navigation = useNavigation();
   let isHomePage = useLocation().pathname === "/";
 
-  console.log({ navigation, location });
   let headerRef = useRef<React.ElementRef<"div">>(null);
   let avatarRef = useRef<React.ElementRef<"div">>(null);
   let isInitial = useRef(true);
@@ -195,7 +193,7 @@ const Header = () => {
                     }}
                   />
                   <Avatar
-                    to="/"
+                    to="/about"
                     large
                     className="block h-16 w-16 origin-left"
                     style={{ transform: "var(--avatar-image-transform)" }}
@@ -216,7 +214,7 @@ const Header = () => {
           <Container.Container>
             {!isHomePage && (
               <AvatarContainer>
-                <Avatar to={"/"} />
+                <Avatar to={"/about"} />
               </AvatarContainer>
             )}
           </Container.Container>
