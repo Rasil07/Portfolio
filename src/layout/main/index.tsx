@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../Header";
+// import Header from "../Header";
 
 type LayoutProps = {
   render: () => React.JSX.Element;
@@ -7,14 +7,14 @@ type LayoutProps = {
 const Layout = ({ render }: LayoutProps) => {
   return (
     <>
-      <div className="fixed inset-0 flex justify-center sm:px-8">
+      {/* <div className="fixed inset-0 flex justify-center sm:px-8">
         <div className="flex w-full max-w-7xl lg:px-8">
-          <div className="w-full bg-white ring-1 ring-zinc-100 dark:bg-zinc-900 dark:ring-zinc-300/20" />
+          <div className="w-full bg-black " />
         </div>
-      </div>
+      </div> */}
       <div className="relative flex w-full flex-col">
-        <Header />
-        <main className="flex-auto">{render()}</main>
+        {/* <Header /> */}
+        <main className="flex-auto w-ful">{render()}</main>
       </div>
     </>
   );
