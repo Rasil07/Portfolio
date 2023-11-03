@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Container } from "../common/ui";
+import { Container, SkillList } from "../common/ui";
 import { Link } from "react-router-dom";
 import Social_Media_Icons from "../config/socialLinks";
 
+type ElementOrArrayRef =
+  | null
+  | React.MutableRefObject<React.ElementRef | null>[];
 function SocialLink({
   icon: Icon,
   ...props
@@ -14,6 +17,12 @@ function SocialLink({
       <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
     </Link>
   );
+}
+
+function clamp(number: number, a: number, b: number) {
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  return Math.min(Math.max(number, min), max);
 }
 
 const SocialMediaList = ({
@@ -47,15 +56,18 @@ const SocialMediaList = ({
 function TriangularImage({
   imgSrc,
   className,
+  style,
 }: {
   imgSrc: string;
   className: string;
+  style: React.CSSProperties | null | undefined;
 }) {
   return (
     <div
       style={{
-        height: "100%",
+        // height: "100%",
         filter: "url('#round')",
+        ...style,
       }}
       className={className}
     >
@@ -105,9 +117,10 @@ function TriangularImage({
   );
 }
 const LandingPage = (): React.ReactNode => {
-  const landingDetailRef = useRef<React.ElementRef<"div">>(null);
-
+  const avatarRef = useRef<React.ElementRef<"div">>(null);
   useEffect(() => {
+    const downDelay = avatarRef.current?.offsetTop + 150 ?? 0;
+
     function setProperty(property: string, value: string) {
       document.documentElement.style.setProperty(property, value);
     }
@@ -116,28 +129,49 @@ const LandingPage = (): React.ReactNode => {
     // }
     function updateLandingDetailStyles() {
       const height = window.innerHeight;
-      setProperty("--content-height", `${height / 1.5}px`);
+      setProperty("--content-height", `${height}px`);
+    }
+
+    function updateImageStyles() {
+      // let fromScale = 1;
+      // let toScale = 0;
+      // let fromX = 0;
+      // let toX = 1 / 16;
+      // let scrollY = downDelay - window.scrollY;
+      // let scale = (scrollY * (fromScale - toScale)) / downDelay + toScale;
+      // scale = clamp(scale, fromScale, toScale);
+      // let x = (scrollY * (fromX - toX)) / downDelay + toX;
+      // x = clamp(x, fromX, toX);
+      // setProperty(
+      //   "--avatar-image-transform",
+      //   `translate3d( ${x}px,0,0) scale(${scale})`
+      // );
     }
 
     updateLandingDetailStyles();
 
-    window.addEventListener("resize", updateLandingDetailStyles);
+    function onScrollHandler() {
+      updateImageStyles();
+    }
 
+    window.addEventListener("resize", updateLandingDetailStyles);
+    window.addEventListener("scroll", onScrollHandler);
     return () => {
       window.removeEventListener("resize", updateLandingDetailStyles);
+      window.removeEventListener("scroll", onScrollHandler);
     };
-  }, [landingDetailRef]);
+  }, []);
 
   return (
-    <Container.Container className="mt-2">
+    <Container.Container className="mt-9">
       <section
         id="intro"
-        className="relative pt-11 flex flex-col justify-center"
+        className="relative pt-11 flex items-start lg:flex-col lg:justify-center"
         style={{
           height: "var(--content-height)",
         }}
       >
-        <div className="flex flex-col max-w-3xl justify-center ">
+        <div className="flex flex-col max-w-2xl pt-[40px]  md:pt-[200px] lg:pt-0  lg:justify-center ">
           <p className="mt-6 text-base font-semibold text-green-600">
             Hi! I am Rasil Baidar.
           </p>
@@ -145,7 +179,7 @@ const LandingPage = (): React.ReactNode => {
             Full-Stack Developer, fitness enthusiast, and part-time explorer
             &#9996;.
           </h1>
-          <p className="mt-6 text-base text-zinc-700">
+          <p className="mt-6 text-base text-zinc-800 ">
             I'm Rasil, a Full-Stack developer based in Nepal. I have been
             working as a full-time software developer for over 3 years, and my
             dream is to work on projects that touch and bring a positive impact
@@ -155,21 +189,26 @@ const LandingPage = (): React.ReactNode => {
           <SocialMediaList className="mt-6 flex gap-6" />
         </div>
 
-        <div
-          className="absolute top-0 right-0 -z-10"
-          style={{ height: "var(--content-height)" }}
-        >
-          <TriangularImage imgSrc="/img/main_pic.jpg" className="" />
-        </div>
+        <img
+          src="/img/main_pic.jpg"
+          className="absolute top-0 w-[80px] h-[80px] object-cover rounded-[100px] md:right-1/2 md:translate-x-1/2  md:w-[200px] md:h-[200px] md:rounded-[400px] lg:hidden"
+        />
+        <TriangularImage
+          imgSrc="/img/main_pic.jpg"
+          className="hidden absolute top-0 right-0 -z-10 lg:block w-[100%] lg:w-[70%] ml-auto max-w-[100%] transition-all "
+          style={{}}
+        />
       </section>
 
-      {/* <section id="skills">
+      <section id="skills" className="mt-0">
         <div>
-          <p className="">Skill</p>
+          <h1 className="text-4xl font-bold tracking-tight text-black sm:text-5xl">
+            Skills
+          </h1>
 
-          <img src="/img/js_logo.png" width={240} height={120} />
+          <SkillList />
         </div>
-      </section> */}
+      </section>
     </Container.Container>
   );
 };

@@ -18,5 +18,5 @@ export default {
       "9xl": ["8rem", { lineHeight: "1" }],
     },
   },
-  plugins: [],
+  plugins: [import("@tailwindcss/aspect-ratio")],
 };
